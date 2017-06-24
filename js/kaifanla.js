@@ -32,6 +32,16 @@ app.config(function ($stateProvider, $urlRouterProvider,
             templateUrl: 'tpl/myOrder.html',
             url: '/kflMyOrder',
             controller:'myorderCtrl'
+        })
+        .state('set', {
+            templateUrl: 'tpl/set.html',
+            url: '/kflSet',
+            controller:'setCtrl'
+        })
+        .state('cart', {
+            templateUrl: 'tpl/cart.html',
+            url: '/kflCart',
+            controller:'cartCtrl'
         });
     $urlRouterProvider.otherwise('/kflStart');
 })
@@ -88,8 +98,8 @@ app.controller('mainCtrl', ['$scope', '$http',
     }
 ])
 //detail控制器
-app.controller('detailCtrl',['$scope','$stateParams','$http',
-    function ($scope,$stateParams,$http) {
+app.controller('detailCtrl',['$scope','$stateParams','$http','$ionicPopup',
+    function ($scope,$stateParams,$http,$ionicPopup){
         console.log($stateParams);
         var did = $stateParams.id;
         $http.get('data/dish_getbyid.php?id='+did)
@@ -97,7 +107,22 @@ app.controller('detailCtrl',['$scope','$stateParams','$http',
                 console.log(data);
                 $scope.dish = data[0];
             })
-
+        $scope.addcart=function(){
+            $http.get('data/cart_update.php?uid=1&did='+did+'&count=-1')
+                .success(function(data){
+                    console.log(data);
+                    if(data.msg==='succ'){
+                        $ionicPopup.alert({
+                            template:'添加成功'
+                        });
+                    }
+                    else{
+                        $ionicPopup.alert({
+                            template:'添加失败'
+                        });
+                    }
+                })
+        }
     }
 ]);
 //order控制器
@@ -145,6 +170,25 @@ app.controller('myorderCtrl',['$scope','$http',function($scope,$http){
         console.log(data);
         $scope.orderlist=data;
     });
+}]);
+//set控制器
+app.controller('setCtrl',['$scope','$ionicModal',function($scope,$ionicModal){
+    //得到模态框对应的实例
+    $ionicModal.fromTemplateUrl('tpl/about.html',{
+        scope:$scope
+    })
+        .then(function(data){
+            $scope.modal=data;
+        });
+
+    //通过$ionicModal显示一个自定义模态框
+    $scope.show=function(){
+        $scope.modal.show()
+    };
+    //关闭模态框
+    $scope.hide=function(){
+        $scope.modal.hide()
+    }
 }]);
 
 
