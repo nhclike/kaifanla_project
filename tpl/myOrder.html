@@ -10,16 +10,17 @@
         <div class="col">联系人</div>
     </div>
     <!-- 模拟body-->
-    <div class="row row-center" ng-repeat="list in orderlist">
-        <div class="col col-10">{{list.did}}</div>
+    <div class="row row-center"
+         ng-repeat="order in orderList">
+        <div class="col col-10">{{order.oid}}</div>
         <div class="col">
-            <a href="#/kflDetail" ui-sref="detail({id:{{list.did}}})">
+            <a href="#/kflDetail/{{order.did}}">
                 <img class="img-responsive"
-                     ng-src="img/{{list.img_sm}}" alt=""/>
+                     ng-src="img/{{order.img_sm}}" alt=""/>
             </a>
         </div>
-        <div class="col">{{list.order_time|date:'yyyy-MM-dd'}}</div>
-        <div class="col">web</div>
+        <div class="col">{{order.order_time | date:'yy-MM-dd hh:mm'}}</div>
+        <div class="col">{{order.user_name}}</div>
     </div>
 </ion-content>
 

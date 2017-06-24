@@ -1,4 +1,40 @@
-<ion-header-bar>
-    <h1 class="title">购物车</h1>
-    <button class="button button-balanced button-lg">编辑</button>
+<ion-header-bar align-title="center">
+    <h1 class="title">开饭啦</h1>
+    <button
+            ng-click="funcEdit()"
+            class="button button-clear button-dark">
+        {{showMsg}}
+    </button>
 </ion-header-bar>
+
+<ion-content class="has-header has-footer">
+        <h1 class="text-center">我的购物车</h1>
+        <div class="list list-inset">
+            <div class="item" ng-repeat="dish in cart">
+                <div class="row">
+                    <div class="col">
+                        <img class="img-responsive"
+                             ng-src="img/{{dish.img_sm}}" alt=""/>
+                    </div>
+                    <div class="col" ng-hide="flagEdit">
+                        <p>{{dish.name}}</p>
+                        <p>{{dish.price+"×"+dish.dishCount}}</p>
+                    </div>
+                    <div class="col" ng-show="flagEdit">
+                        <button ng-click="minus($index)">-</button>
+                        <span>{{dish.dishCount}}</span>
+                        <button ng-click="add($index)">+</button>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <p>总计:{{sumAll()}}</p>
+                <button
+                        ng-click="jump('order')"
+                        class="button button-balanced">确定下单</button>
+            </div>
+        </div>
+</ion-content>
+
+
+<div ng-include="'tpl/include/footer.html'"></div>
