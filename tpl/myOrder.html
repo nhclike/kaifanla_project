@@ -1,0 +1,26 @@
+<div ng-include="'tpl/include/header.html'"></div>
+
+<ion-content class="has-header has-footer">
+    <h2 class="text-center">我的订单</h2>
+    <!-- 模拟表头-->
+    <div class="row">
+        <div class="col col-10">编号</div>
+        <div class="col">菜品</div>
+        <div class="col">下单时间</div>
+        <div class="col">联系人</div>
+    </div>
+    <!-- 模拟body-->
+    <div class="row row-center" ng-repeat="list in orderlist">
+        <div class="col col-10">{{list.did}}</div>
+        <div class="col">
+            <a href="#/kflDetail" ui-sref="detail({id:{{list.did}}})">
+                <img class="img-responsive"
+                     ng-src="img/{{list.img_sm}}" alt=""/>
+            </a>
+        </div>
+        <div class="col">{{list.order_time|date:'yyyy-MM-dd'}}</div>
+        <div class="col">web</div>
+    </div>
+</ion-content>
+
+<div ng-include="'tpl/include/footer.html'"></div>
